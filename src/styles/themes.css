@@ -1,0 +1,58 @@
+/* Default theme structure */
+:root {
+--background: #1c1b19;
+--foreground: #e2e2e2;
+--primary: #e2b714; /* Yellow (Serika) */
+}
+
+
+/* Applied globally */
+body {
+background: var(--background);
+color: var(--foreground);
+}
+
+
+.caret-primary {
+caret-color: var(--primary);
+}
+
+
+/* =================== */
+/* THEMES */
+/* =================== */
+
+
+.serika {
+--background: #1c1b19;
+--foreground: #e2e2e2;
+--primary: #e2b714;
+}
+
+
+.dracula {
+--background: #282a36;
+--foreground: #f8f8f2;
+--primary: #bd93f9;
+}
+
+
+.nord {
+--background: #2e3440;
+--foreground: #eceff4;
+--primary: #88c0d0;
+}
+
+
+.carbon {
+--background: #111;
+--foreground: #ddd;
+--primary: #0af;
+}
+
+
+/* Make Tailwind use theme variables */
+.bg-background { background-color: var(--background); }
+.text-foreground { color: var(--foreground); }
+.text-primary { color: var(--primary); }
+.bg-primary { background-color: var(--primary); }
