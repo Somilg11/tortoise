@@ -1,3 +1,8 @@
+
+/* Import fonts used by the settings selector */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;700&family=JetBrains+Mono:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -78,6 +83,62 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
 }
 
+/* Theme definitions (moved inline so they cascade after :root defaults) */
+/* Default theme structure */
+:root {
+  --background: #1c1b19;
+  --foreground: #e2e2e2;
+  --primary: #e2b714; /* Yellow (Serika) */
+}
+
+/* Applied globally */
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.caret-primary {
+  caret-color: var(--primary);
+}
+
+/* =================== */
+/* THEMES */
+/* =================== */
+
+.serika {
+  --background: #1c1b19;
+  --foreground: #e2e2e2;
+  --primary: #e2b714;
+}
+
+
+.dracula {
+  --background: #282a36;
+  --foreground: #f8f8f2;
+  --primary: #bd93f9;
+}
+
+
+.nord {
+  --background: #2e3440;
+  --foreground: #eceff4;
+  --primary: #88c0d0;
+}
+
+
+.carbon {
+  --background: #111;
+  --foreground: #ddd;
+  --primary: #0af;
+}
+
+
+/* Make Tailwind use theme variables */
+.bg-background { background-color: var(--background); }
+.text-foreground { color: var(--foreground); }
+.text-primary { color: var(--primary); }
+.bg-primary { background-color: var(--primary); }
+
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
@@ -129,4 +190,21 @@
 
 .font-mono-test {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+}
+
+/* Font classes applied to <body> by the FontSelector component */
+.font-inter {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.font-jetbrains {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+}
+
+.font-fira {
+  font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+}
+
+.font-roboto {
+  font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
 }
