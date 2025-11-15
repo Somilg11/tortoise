@@ -8,7 +8,10 @@
 
 Tortoise is a focused typing test web app that emphasizes clean UX, instant settings feedback, and actionable analysis. It provides per-word heatmaps, WPM timelines, keystroke charts and a persistent session history stored in localStorage.
 
-Short interview summary
+<!-- ![Main](/public/tortoise_test.png) -->
+![Analysis](/public/tortoise_analyse.png)
+
+Summary
 ----------------------
 - Problem solved: built a compact typing test experience that immediately reflects user settings (difficulty/time/word count) without page reloads, and provides analyzable session data for performance review.
 - Why this approach: local first (fast, private), simple predictable UI, and a single reusable hook (`useTyping`) responsible for generation, sampling and metrics; avoids heavy backend dependencies for quick iteration.
