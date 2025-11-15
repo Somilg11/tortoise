@@ -2,9 +2,12 @@
 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
-export default function KeystrokeChart({ data }: { data: { t: number; kps: number }[] }) {
+type KeystrokeChartProps = { data: { t: number; kps: number }[]; height?: number | string };
+
+export default function KeystrokeChart({ data, height = 256 }: KeystrokeChartProps) {
+    const style: React.CSSProperties = { width: "100%", height: typeof height === "number" ? `${height}px` : height };
     return (
-        <div className="w-full h-64">
+        <div style={style}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />
