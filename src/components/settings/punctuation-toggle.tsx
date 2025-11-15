@@ -19,6 +19,9 @@ export default function PunctuationToggle() {
     const update = (v: boolean) => {
         setEnabled(v);
         localStorage.setItem("tortoise_punctuation", String(v));
+        try {
+            window.dispatchEvent(new CustomEvent("tortoise_setting_changed", { detail: { key: "tortoise_punctuation", value: v } }));
+        } catch {}
     };
 
 

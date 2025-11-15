@@ -28,6 +28,7 @@ export function useTyping(timeLimit: number, opts: UseTypingOptions = {}) {
   const [heatmap, setHeatmap] = useState<number[]>(Array(count).fill(0));
 
   const lastKeystroke = useRef<number | null>(null);
+  const timeLeftRef = useRef<number>(timeLeft);
 
   // helper: generate initial words
   const generate = useCallback(() => {
@@ -41,12 +42,15 @@ export function useTyping(timeLimit: number, opts: UseTypingOptions = {}) {
     }
   }, [count, difficulty, includePunctuation]);
 
+  // generate words when generation options change
   useEffect(() => {
     generate();
-    // reset timeLeft when count or timeLimit changes
-    setTimeLeft(timeLimit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generate]);
+
+  // update timeLeft when timeLimit changes
+  useEffect(() => {
+    setTimeLeft(timeLimit);
+  }, [timeLimit]);
 
   // timer
   useEffect(() => {
@@ -64,17 +68,35 @@ export function useTyping(timeLimit: number, opts: UseTypingOptions = {}) {
     return () => clearInterval(interval);
   }, [started, finished]);
 
-  // timeline sampling
+  // keep a ref to latest timeLeft for interval callbacks
+  useEffect(() => {
+    timeLeftRef.current = timeLeft;
+  }, [timeLeft]);
+
+  // timeline sampling — use a ref for timeLeft to avoid recreating interval every second
   useEffect(() => {
     if (!started || finished) return;
     const interval = setInterval(() => {
-      const elapsed = Math.max(1, timeLimit - timeLeft);
+      const elapsed = Math.max(1, timeLimit - timeLeftRef.current);
       const wpmNow = calculateWPM(words.slice(0, wordIndex).join(" "), elapsed);
       setTimeline((prev) => [...prev, { t: elapsed, wpm: wpmNow }]);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [started, finished, timeLeft, wordIndex, words, timeLimit]);
+    // intentionally not including timeLeft in deps — we rely on timeLeftRef
+  }, [started, finished, wordIndex, words, timeLimit]);
+
+  // when test finishes, append a final timeline sample (if not already present)
+  useEffect(() => {
+    if (!finished) return;
+    const elapsed = Math.max(0, timeLimit - timeLeftRef.current);
+    const wpmNow = calculateWPM(words.slice(0, wordIndex).join(" "), Math.max(1, elapsed));
+    setTimeline((prev) => {
+      if (prev.length && prev[prev.length - 1].t === Math.max(1, elapsed)) return prev;
+      return [...prev, { t: Math.max(1, elapsed), wpm: wpmNow }];
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [finished]);
 
   // input handler
   const handleInput = (v: string) => {

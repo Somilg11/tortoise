@@ -7,7 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 
 export function calculateWPM(text: string, timeSpent: number) {
   if (timeSpent === 0) return 0;
-  const wordsTyped = text.trim().split(/\s+/).length;
+  const trimmed = text.trim();
+  if (trimmed === "") return 0;
+  const wordsTyped = trimmed.split(/\s+/).length;
   return Math.round((wordsTyped / timeSpent) * 60);
 }
 

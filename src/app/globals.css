@@ -126,3 +126,7 @@
 * {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
+
+.font-mono-test {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+}

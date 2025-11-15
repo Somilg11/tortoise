@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, FileText } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -10,7 +9,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { saveSession } from "@/lib/sessionStore";
-import { exportCSV, exportPDF } from "@/lib/exportUtils";
+import Heatmap from "@/components/charts/heatmap";
 
 type TimelinePoint = { t: number; wpm: number };
 type KeystrokePoint = { t: number; kps: number };
@@ -47,21 +46,16 @@ export default function ResultsModal({ wpm, accuracy, timeline, keystrokes, heat
                     <div className="text-lg">WPM: <b>{wpm}</b></div>
                     <div className="text-lg">Accuracy: <b>{accuracy}%</b></div>
 
-                                <div className="flex gap-3 pt-2">
-                                    <Button size="xs" onClick={() => exportCSV({ timestamp: Date.now(), wpm, accuracy, timeline, keystrokes, heatmap })}>
-                                        <Download className="size-4" />
-                                        CSV
-                                    </Button>
+                    <section className="bg-muted/10 rounded p-3">
+                        <h3 className="text-sm font-medium mb-2">Mistake Heatmap</h3>
+                        <Heatmap heatmap={heatmap} />
+                    </section>
 
-                                    <Button size="xs" onClick={() => exportPDF({ timestamp: Date.now(), wpm, accuracy, timeline, keystrokes, heatmap })}>
-                                        <FileText className="size-4" />
-                                        PDF
-                                    </Button>
-
-                                    <Button size="xs" variant="outline" onClick={() => setOpen(false)}>
-                                        Close
-                                    </Button>
-                                </div>
+                    <div className="flex gap-3 pt-2">
+                        <Button size="xs" variant="outline" onClick={() => setOpen(false)}>
+                            Close
+                        </Button>
+                    </div>
                 </div>
             </DialogContent>
         </Dialog>

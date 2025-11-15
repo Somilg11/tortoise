@@ -33,3 +33,11 @@ export function loadLatestSession(): SessionEntry | null {
     const s = loadSessions();
     return s.length ? s[s.length - 1] : null;
 }
+
+export function clearSessions() {
+    try {
+        localStorage.removeItem(KEY);
+    } catch (e) {
+        console.error("clearSessions error", e);
+    }
+}

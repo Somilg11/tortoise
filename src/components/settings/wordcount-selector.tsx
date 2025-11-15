@@ -19,6 +19,9 @@ export default function WordCountSelector() {
     const update = (v: string) => {
         setCount(v);
         localStorage.setItem("tortoise_wordcount", v);
+        try {
+            window.dispatchEvent(new CustomEvent("tortoise_setting_changed", { detail: { key: "tortoise_wordcount", value: v } }));
+        } catch {}
     };
 
 

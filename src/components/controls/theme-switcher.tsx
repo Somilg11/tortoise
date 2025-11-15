@@ -1,3 +1,4 @@
+// src/components/controls/theme-switcher.tsx
 "use client";
 
 import { useTheme } from "@/app/theme-provider";
@@ -13,7 +14,7 @@ export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <Select value={theme} onValueChange={setTheme}>
+    <Select value={theme} onValueChange={(v) => setTheme(v)}>
       <SelectTrigger className="w-[140px]">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
